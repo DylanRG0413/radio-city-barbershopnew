@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Radio City Barbershop: haircuts, beard trims and straight razor shaves. Call (848) 202-1271 to book.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2710%27 fill=%27%23d41e3a%27/%3E%3C/svg%3E">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Radio City Barbershop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: sticky bar, tall left-aligned hero over a broadcast dial, services in two columns, hours as an on-air schedule beside contact. */
+:root {
+  --bg: #edf0f3;
+  --surface: #ffffff;
+  --ink: #0b1626;
+  --muted: #4a586a;
+  --line: #cbd3dd;
+  --red: #d41e3a;
+  --red-text: #c0142f;
+  --on-red: #ffffff;
+  --dial: #0b1626;
+  --dial-ink: #dfe6ee;
+  --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #09121f;
+    --surface: #101c2d;
+    --ink: #e9eef4;
+    --muted: #9baabb;
+    --line: #243449;
+    --red: #e5233f;
+    --red-text: #ff6f82;
+    --on-red: #ffffff;
+    --dial: #060d17;
+    --dial-ink: #dfe6ee;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #09121f;
+  --surface: #101c2d;
+  --ink: #e9eef4;
+  --muted: #9baabb;
+  --line: #243449;
+  --red: #e5233f;
+  --red-text: #ff6f82;
+  --on-red: #ffffff;
+  --dial: #060d17;
+  --dial-ink: #dfe6ee;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  padding-inline: 1rem;
+}
+.wrap { max-width: 1120px; margin-inline: auto; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; border-radius: 2px; }
+
+/* Top bar */
+.bar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  margin-inline: -1rem;
+  padding-inline: 1rem;
+}
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .7rem; }
+.brand { font-family: var(--font-display); font-weight: 800; font-size: 1.45rem; letter-spacing: .06em; text-transform: uppercase; line-height: 1; text-decoration: none; display: flex; align-items: center; gap: .6rem; min-width: 0; }
+.brand i { width: .7rem; height: .7rem; border-radius: 50%; background: var(--red); flex: none; }
+.nav { display: flex; align-items: center; gap: 1.4rem; }
+.nav a.link { text-decoration: none; font-size: .95rem; font-weight: 500; color: var(--muted); }
+.nav a.link:hover { color: var(--ink); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  background: var(--red); color: var(--on-red);
+  font-family: var(--font-body); font-weight: 600; font-size: .98rem;
+  padding: .7rem 1.15rem; border: 0; border-radius: 4px; text-decoration: none; cursor: pointer;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+.btn.ghost:hover { background: var(--ink); color: var(--bg); filter: none; }
+
+/* Hero */
+.hero { padding-block: clamp(2.5rem, 7vw, 5.5rem) clamp(2rem, 5vw, 3.5rem); }
+.status {
+  display: inline-flex; align-items: center; gap: .6rem;
+  font-family: var(--font-mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+  border: 1px solid var(--line); background: var(--surface); padding: .4rem .8rem; border-radius: 999px;
+  max-width: 100%;
+}
+.lamp { width: .6rem; height: .6rem; border-radius: 50%; background: var(--muted); flex: none; }
+.status[data-state="open"] .lamp { background: #1fa65a; box-shadow: 0 0 0 4px color-mix(in srgb, #1fa65a 25%, transparent); }
+.status[data-state="closed"] .lamp { background: var(--red); }
+h1 {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(3.6rem, 13.5vw, 9.5rem); line-height: .86; letter-spacing: .005em;
+  margin: 1.2rem 0 0; text-wrap: balance;
+}
+h1 .red { color: var(--red); }
+.lede { max-width: 34rem; font-size: 1.15rem; color: var(--muted); margin: 1.5rem 0 0; }
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1rem; margin-top: 1.8rem; }
+.phone { font-family: var(--font-mono); font-size: 1.05rem; letter-spacing: .02em; }
+
+/* Dial */
+.dial {
+  position: relative; margin-top: clamp(2.2rem, 5vw, 3.5rem);
+  background: var(--dial); color: var(--dial-ink);
+  border-radius: 6px; padding: 1.1rem 1rem 1.2rem; overflow: hidden;
+  border: 1px solid var(--line);
+}
+.dial svg { display: block; width: 100%; height: auto; }
+.dial .tick { stroke: currentColor; }
+.dial text { fill: currentColor; font-family: var(--font-mono); font-size: 13px; }
+.dial-meta { display: flex; justify-content: space-between; gap: 1rem; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dial-ink); opacity: .7; margin-top: .6rem; }
+.needle { position: absolute; top: .7rem; bottom: 2.4rem; left: 63%; width: 2px; background: var(--red); box-shadow: 0 0 12px var(--red); animation: sweep 1.6s cubic-bezier(.2,.7,.2,1) both; }
+.needle::before { content: ""; position: absolute; top: -2px; left: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
+@keyframes sweep { from { transform: translateX(-45vw); } to { transform: translateX(0); } }
+
+/* Sections */
+section { padding-block: clamp(2.5rem, 6vw, 4.5rem); border-top: 1px solid var(--line); }
+.eyebrow { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--red-text); margin: 0; }
+h2 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(2.2rem, 6vw, 3.8rem); line-height: .95; margin: .6rem 0 0; text-wrap: balance; }
+.sec-head { display: grid; gap: .6rem; margin-bottom: 2.2rem; }
+.sec-head p { max-width: 36rem; color: var(--muted); margin: .6rem 0 0; }
+
+.groups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+.group { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: clamp(1.2rem, 3vw, 2rem); min-width: 0; }
+.group h3 { font-family: var(--font-display); font-weight: 800; font-size: 1.7rem; text-transform: uppercase; letter-spacing: .03em; margin: 0 0 .6rem; }
+.group ul { list-style: none; margin: 0; padding: 0; }
+.group li { display: grid; gap: .1rem; padding-block: .85rem; border-top: 1px solid var(--line); }
+.group li:first-child { border-top: 0; }
+.group li b { font-weight: 600; font-size: 1.05rem; }
+.group li span { color: var(--muted); font-size: .95rem; }
+
+/* Hours + contact */
+.split { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.2rem; }
+.hours { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: clamp(1.2rem, 3vw, 2rem); min-width: 0; }
+.hours table { width: 100%; border-collapse: collapse; }
+.hours th, .hours td { text-align: left; padding: .8rem .5rem; border-top: 1px solid var(--line); font-weight: 400; }
+.hours tr:first-child th, .hours tr:first-child td { border-top: 0; }
+.hours th { font-weight: 500; }
+.hours td { font-family: var(--font-mono); font-size: .95rem; text-align: right; font-variant-numeric: tabular-nums; }
+.hours tr.closed td { color: var(--muted); }
+.hours tr.today { background: color-mix(in srgb, var(--red) 12%, transparent); }
+.hours tr.today th { box-shadow: inset 3px 0 0 var(--red); padding-left: .8rem; }
+.hours tr.today th::after { content: "Today"; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--red-text); margin-left: .6rem; }
+.contact { background: var(--dial); color: var(--dial-ink); border-radius: 6px; padding: clamp(1.2rem, 3vw, 2rem); display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+.contact h3 { font-family: var(--font-display); font-weight: 800; font-size: 1.7rem; text-transform: uppercase; letter-spacing: .03em; margin: 0; }
+.contact p { margin: 0; opacity: .8; }
+.contact .big { font-family: var(--font-mono); font-size: clamp(1.5rem, 4.4vw, 2rem); letter-spacing: .01em; opacity: 1; word-break: break-word; }
+.contact .row { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: auto; }
+.contact .btn.ghost { color: var(--dial-ink); border-color: var(--dial-ink); }
+.contact .btn.ghost:hover { background: var(--dial-ink); color: var(--dial); }
+
+/* Book now + demo request */
+.btn.btn-book { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; letter-spacing: .1em; text-transform: uppercase; padding: .55rem 1.1rem; }
+.btn.btn-lg { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; letter-spacing: .1em; text-transform: uppercase; padding: .8rem 1.8rem; }
+#book { scroll-margin-top: 4.5rem; }
+.demo-flag { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--font-mono); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; border: 1.5px solid var(--red-text); color: var(--red-text); padding: .45rem .8rem; border-radius: 4px; margin-top: 1.2rem; max-width: 100%; }
+.req { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: clamp(1.2rem, 3vw, 2rem); max-width: 46rem; }
+.req form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.2rem; }
+.field { display: flex; flex-direction: column; gap: .4rem; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.field input, .field select, .field textarea { font: inherit; font-size: 1rem; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: .7rem .8rem; width: 100%; min-width: 0; }
+.field textarea { resize: vertical; min-height: 5.5rem; }
+.req .actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem; }
+.req .fine { color: var(--muted); font-size: .92rem; margin: 0; }
+.notice { grid-column: 1 / -1; border: 1.5px solid var(--red-text); background: color-mix(in srgb, var(--red) 10%, transparent); border-radius: 4px; padding: 1rem 1.1rem; }
+.notice b { display: block; font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; letter-spacing: .04em; text-transform: uppercase; }
+.notice p { margin: .3rem 0 0; }
+@media (max-width: 760px) { .req form { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 520px) { .nav .btn.call { display: none; } }
+
+footer { border-top: 1px solid var(--line); padding-block: 1.6rem 2rem; color: var(--muted); font-size: .9rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem 1.5rem; }
+
+@media (max-width: 760px) {
+  .groups, .split { grid-template-columns: minmax(0, 1fr); }
+  .nav a.link { display: none; }
+  .brand { font-size: 1.2rem; }
+  .btn { padding: .65rem 1rem; }
+  .needle { left: 58%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .needle { animation: none; }
+}
+</style>
+
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top"><i aria-hidden="true"></i><span>Radio City</span></a>
+    <nav class="nav" aria-label="Page sections">
+      <a class="link" href="#services">Services</a>
+      <a class="link" href="#hours">Hours</a>
+      <a class="btn btn-book" href="#book">Book Now</a>
+      <a class="btn call" href="tel:+18482021271">Call (848) 202-1271</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <div class="status" id="status" data-state="unknown"><span class="lamp" aria-hidden="true"></span><span id="status-text">Hours below</span></div>
+      <h1>Radio City <span class="red">Barbershop</span></h1>
+      <p class="lede">Haircuts, beard work and straight razor shaves from a shop that takes the details seriously. Walk in sharp, walk out sharper.</p>
+      <div class="cta">
+        <a class="btn btn-lg" href="#book">Book Now</a>
+        <a class="btn" href="tel:+18482021271">Call to book</a>
+        <span class="phone">(848) 202-1271</span>
+        <a class="btn ghost" href="#services">See services</a>
+      </div>
+
+      <div class="dial" aria-hidden="true">
+        <svg id="dial-svg" viewBox="0 0 1000 96" preserveAspectRatio="none"></svg>
+        <div class="needle"></div>
+        <div class="dial-meta"><span>Radio City</span><span>On the dial since open</span></div>
+      </div>
+    </div>
+
+    <section id="services">
+      <div class="sec-head">
+        <p class="eyebrow">Services</p>
+        <h2>Every cut. Every edge.</h2>
+        <p>From a quick buzz to a full custom cut, plus the shave and beard work that finishes the job. Call to ask about any of these.</p>
+      </div>
+      <div class="groups">
+        <div class="group">
+          <h3>Cuts &amp; shaping</h3>
+          <ul>
+            <li><b>Haircut</b><span>A clean, even cut from start to finish.</span></li>
+            <li><b>Custom cut</b><span>Built around your hair type, head shape and style.</span></li>
+            <li><b>Scissor cut</b><span>Shaped by hand for natural movement.</span></li>
+            <li><b>Razor cut</b><span>Softer, textured edges.</span></li>
+            <li><b>Buzz cut</b><span>Clippers at one even length.</span></li>
+            <li><b>Military haircut</b><span>Tight, regulation-style tapers and fades.</span></li>
+            <li><b>Hair shape up</b><span>Crisp lines at the hairline and temples.</span></li>
+            <li><b>Kids' cuts</b><span>Quick, patient cuts for younger clients.</span></li>
+          </ul>
+        </div>
+        <div class="group">
+          <h3>Beard &amp; shave</h3>
+          <ul>
+            <li><b>Beard trim</b><span>Cleaned up and shaped to hold its line.</span></li>
+            <li><b>Beard maintenance</b><span>Regular upkeep to keep your beard looking its best.</span></li>
+            <li><b>Shave</b><span>A smooth, close shave.</span></li>
+            <li><b>Straight razor shave</b><span>The classic close shave, done with a straight razor.</span></li>
+            <li><b>Head shave</b><span>A smooth finish, top to bottom.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="hours">
+      <div class="sec-head">
+        <p class="eyebrow">Hours &amp; contact</p>
+        <h2>On air all week. Almost.</h2>
+        <p>Closed Sundays. Holiday hours can differ, so call ahead on a holiday.</p>
+      </div>
+      <div class="split">
+        <div class="hours">
+          <table aria-label="Opening hours">
+            <tbody id="hours-body">
+              <tr data-day="1"><th scope="row">Monday</th><td>9:00 AM – 6:30 PM</td></tr>
+              <tr data-day="2"><th scope="row">Tuesday</th><td>9:00 AM – 6:30 PM</td></tr>
+              <tr data-day="3"><th scope="row">Wednesday</th><td>9:00 AM – 6:30 PM</td></tr>
+              <tr data-day="4"><th scope="row">Thursday</th><td>9:00 AM – 6:30 PM</td></tr>
+              <tr data-day="5"><th scope="row">Friday</th><td>9:00 AM – 6:30 PM</td></tr>
+              <tr data-day="6"><th scope="row">Saturday</th><td>9:00 AM – 4:30 PM</td></tr>
+              <tr data-day="0" class="closed"><th scope="row">Sunday</th><td>Closed</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="contact">
+          <h3>Book a chair</h3>
+          <p>Call the shop to book or ask a question.</p>
+          <p class="big" id="phone-text">(848) 202-1271</p>
+          <div class="row">
+            <a class="btn" href="tel:+18482021271">Call now</a>
+            <button class="btn ghost" id="copy" type="button">Copy number</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="book">
+      <div class="sec-head">
+        <p class="eyebrow">Book now</p>
+        <h2>Request a chair</h2>
+        <p>Pick a service and a time that works for you.</p>
+        <div><span class="demo-flag">Demo only — booking is not available yet</span></div>
+      </div>
+      <div class="req">
+        <form id="demo-form" novalidate>
+          <div class="field">
+            <label for="req-name">Your name</label>
+            <input id="req-name" name="name" type="text" autocomplete="name" placeholder="Jordan Smith">
+          </div>
+          <div class="field">
+            <label for="req-phone">Phone</label>
+            <input id="req-phone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 555-0100">
+          </div>
+          <div class="field full">
+            <label for="req-service">Service</label>
+            <select id="req-service" name="service">
+              <option>Haircut</option>
+              <option>Custom cut</option>
+              <option>Scissor cut</option>
+              <option>Razor cut</option>
+              <option>Buzz cut</option>
+              <option>Military haircut</option>
+              <option>Hair shape up</option>
+              <option>Kids&#39; cuts</option>
+              <option>Beard trim</option>
+              <option>Beard maintenance</option>
+              <option>Shave</option>
+              <option>Straight razor shave</option>
+              <option>Head shave</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="req-day">Preferred day</label>
+            <select id="req-day" name="day">
+              <option>Monday</option>
+              <option>Tuesday</option>
+              <option>Wednesday</option>
+              <option>Thursday</option>
+              <option>Friday</option>
+              <option>Saturday</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="req-time">Preferred time</label>
+            <select id="req-time" name="time">
+              <option>Morning</option>
+              <option>Midday</option>
+              <option>Afternoon</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="req-notes">Notes</label>
+            <textarea id="req-notes" name="notes" placeholder="Anything the barber should know"></textarea>
+          </div>
+          <div class="actions">
+            <button class="btn" type="submit">Send request (demo)</button>
+            <p class="fine">Nothing is sent or saved. To book for real, call (848) 202-1271.</p>
+          </div>
+          <div class="notice" id="demo-notice" role="status" aria-live="polite" hidden>
+            <b>Demo only — booking is not available yet.</b>
+            <p>Your request was not sent. Call the shop at (848) 202-1271 to book.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Radio City Barbershop</span>
+    <span>Mon–Fri 9–6:30 · Sat 9–4:30 · Sun closed</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Dial ticks
+  var svg = document.getElementById("dial-svg");
+  if (svg) {
+    var out = "";
+    for (var i = 0; i <= 100; i++) {
+      var x = 5 + i * 9.9;
+      var major = i % 10 === 0;
+      var mid = i % 5 === 0;
+      var h = major ? 46 : mid ? 30 : 18;
+      out += '<line class="tick" x1="' + x + '" x2="' + x + '" y1="8" y2="' + (8 + h) + '" stroke-width="' + (major ? 2 : 1) + '" opacity="' + (major ? 1 : 0.55) + '"/>';
+      if (major) out += '<text x="' + x + '" y="84" text-anchor="middle">' + (88 + (i / 10) * 2) + '</text>';
+    }
+    svg.innerHTML = out;
+  }
+
+  // Hours
+  var HOURS = { 0: null, 1: [540, 1110], 2: [540, 1110], 3: [540, 1110], 4: [540, 1110], 5: [540, 1110], 6: [540, 990] };
+  var NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  function fmt(m) {
+    var h = Math.floor(m / 60), mm = m % 60, ap = h >= 12 ? "PM" : "AM";
+    h = h % 12 || 12;
+    return h + ":" + (mm < 10 ? "0" : "") + mm + " " + ap;
+  }
+  function nowNY() {
+    try {
+      var p = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short", hour: "numeric", minute: "numeric", hour12: false }).formatToParts(new Date());
+      var o = {};
+      p.forEach(function (x) { o[x.type] = x.value; });
+      var day = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[o.weekday];
+      return { day: day, min: (parseInt(o.hour, 10) % 24) * 60 + parseInt(o.minute, 10) };
+    } catch (e) {
+      var d = new Date();
+      return { day: d.getDay(), min: d.getHours() * 60 + d.getMinutes() };
+    }
+  }
+  var n = nowNY();
+  var rows = document.querySelectorAll("#hours-body tr");
+  rows.forEach(function (r) { if (parseInt(r.getAttribute("data-day"), 10) === n.day) r.classList.add("today"); });
+
+  var status = document.getElementById("status");
+  var text = document.getElementById("status-text");
+  var today = HOURS[n.day];
+  var isOpen = today && n.min >= today[0] && n.min < today[1];
+  if (isOpen) {
+    status.setAttribute("data-state", "open");
+    text.textContent = "Open now · closes " + fmt(today[1]);
+  } else {
+    var label = "", d = n.day, offset = 0;
+    if (today && n.min < today[0]) { label = "today " + fmt(today[0]); }
+    else {
+      do { d = (d + 1) % 7; offset++; } while (!HOURS[d] && offset < 7);
+      label = (offset === 1 ? "tomorrow " : NAMES[d] + " ") + fmt(HOURS[d][0]);
+    }
+    status.setAttribute("data-state", "closed");
+    text.textContent = "Closed now · opens " + label;
+  }
+
+  // Copy phone
+  var btn = document.getElementById("copy");
+  var num = "(848) 202-1271";
+  btn.addEventListener("click", function () {
+    function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy number"; }, 1800); }
+    function fallback() {
+      var el = document.getElementById("phone-text");
+      var r = document.createRange(); r.selectNodeContents(el);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = "Number selected";
+    }
+    try {
+      navigator.clipboard.writeText(num).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+<script>
+(function () {
+  var form = document.getElementById("demo-form");
+  var notice = document.getElementById("demo-notice");
+  if (!form || !notice) return;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    notice.hidden = false;
+    try { notice.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (err) {}
+  });
+})();
+</script>
+</body>
+</html>
